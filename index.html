@@ -78,7 +78,7 @@
         <div id="btnModeDeduct" class="action-btn" onclick="setActionMode('DEDUCT')">➖ Redeem / Deduct</div>
     </div>
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    <form id="rewardForm" action="https://script.google.com/macros/s/AKfycbzRmHQLqW-5SjBCFbUhUgFUgQpNOH55JgCyWGQ56N2NdfUKyU3V0SJnRK_iK_Cp8XHo/exec" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
+    <form id="rewardForm" action="https://script.google.com/macros/s/AKfycbyNeBMGIPgDcJUGHz1svDyn-RLfsiXeDXp83lgCfvkC0rv2CympdAeMYijPs8tgkcyi/exec" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
 
         <input type="hidden" name="actionMode" id="actionMode" value="ADD">
 
@@ -770,16 +770,35 @@ async function handleFormSubmit(event) {
             }
         }
 
+        /* ── Ensure hidden inputs have values before submit ── */
+        if (targetMode === 'class') {
+            document.getElementById('classNames').value = selectedClasses.join(',');
+        } else {
+            document.getElementById('studentNames').value = selectedStudents.join(',');
+        }
+
         /* ── Submit via hidden iframe ── */
         submitBtn.textContent = 'Submitting...';
         isSubmitting = true;
-        document.getElementById('rewardForm').submit();
 
-        /* Fallback: if postMessage never arrives, assume success after iframe loads */
+        var form = document.getElementById('rewardForm');
+        form.submit();
+
+        /* Fallback: if postMessage never arrives, show success after timeout */
+        var fallbackTimer = setTimeout(function() {
+            if (isSubmitting) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                showToast(actionMode === 'DEDUCT' ? '🎁 Stars Deducted Successfully!' : '⭐ Stars Submitted Successfully!', 'success');
+                setTimeout(function() { location.reload(); }, 1500);
+            }
+        }, 8000);
+
         document.getElementById('hidden_iframe').onload = function() {
             setTimeout(function() {
                 if (isSubmitting) {
                     isSubmitting = false;
+                    clearTimeout(fallbackTimer);
                     showToast(actionMode === 'DEDUCT' ? '🎁 Stars Deducted Successfully!' : '⭐ Stars Submitted Successfully!', 'success');
                     setTimeout(function() { location.reload(); }, 1500);
                 }
@@ -787,7 +806,7 @@ async function handleFormSubmit(event) {
         };
 
     } catch (error) {
-        showToast('Error checking balance. Ensure Google Sheet is shared as "Anyone with link - Viewer".<br>' + escapeHTML(error.message), 'error');
+        showToast('Error: ' + escapeHTML(error.message), 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = actionMode === 'ADD' ? 'Submit Stars' : 'Deduct Stars';
     }
