@@ -273,20 +273,22 @@
             <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
         </select>
 
-        <label>Reason / Note <span class="optional">(optional)</span></label>
-        <div class="reason-chips" id="reasonChips">
-            <span class="reason-chip" data-reason="Polite & well-mannered" onclick="toggleReasonChip(this)">🤝 Polite & Well-mannered</span>
-            <span class="reason-chip" data-reason="Helpful to teachers/classmates" onclick="toggleReasonChip(this)">💡 Helpful</span>
-            <span class="reason-chip" data-reason="Punctual to school" onclick="toggleReasonChip(this)">⏰ Punctual</span>
-            <span class="reason-chip" data-reason="Honest & trustworthy" onclick="toggleReasonChip(this)">✅ Honest</span>
-            <span class="reason-chip" data-reason="Remarkable results in exam/test" onclick="toggleReasonChip(this)">📝 Great Results</span>
-            <span class="reason-chip" data-reason="Active participation in class" onclick="toggleReasonChip(this)">🙋 Active in Class</span>
-            <span class="reason-chip" data-reason="Good teamwork & cooperation" onclick="toggleReasonChip(this)">🤝 Teamwork</span>
-            <span class="reason-chip" data-reason="Outstanding homework/assignment" onclick="toggleReasonChip(this)">📚 Good Homework</span>
-            <span class="reason-chip" data-reason="Positive attitude & effort" onclick="toggleReasonChip(this)">💪 Great Effort</span>
-            <span class="reason-chip" data-reason="Community service / volunteering" onclick="toggleReasonChip(this)">🌟 Service</span>
+        <div id="reasonSection">
+            <label>Reason / Note <span class="optional">(optional)</span></label>
+            <div class="reason-chips" id="reasonChips">
+                <span class="reason-chip" data-reason="Polite & well-mannered" onclick="toggleReasonChip(this)">🤝 Polite & Well-mannered</span>
+                <span class="reason-chip" data-reason="Helpful to teachers/classmates" onclick="toggleReasonChip(this)">💡 Helpful</span>
+                <span class="reason-chip" data-reason="Punctual to school" onclick="toggleReasonChip(this)">⏰ Punctual</span>
+                <span class="reason-chip" data-reason="Honest & trustworthy" onclick="toggleReasonChip(this)">✅ Honest</span>
+                <span class="reason-chip" data-reason="Remarkable results in exam/test" onclick="toggleReasonChip(this)">📝 Great Results</span>
+                <span class="reason-chip" data-reason="Active participation in class" onclick="toggleReasonChip(this)">🙋 Active in Class</span>
+                <span class="reason-chip" data-reason="Good teamwork & cooperation" onclick="toggleReasonChip(this)">🤝 Teamwork</span>
+                <span class="reason-chip" data-reason="Outstanding homework/assignment" onclick="toggleReasonChip(this)">📚 Good Homework</span>
+                <span class="reason-chip" data-reason="Positive attitude & effort" onclick="toggleReasonChip(this)">💪 Great Effort</span>
+                <span class="reason-chip" data-reason="Community service / volunteering" onclick="toggleReasonChip(this)">🌟 Service</span>
+            </div>
+            <textarea name="reason" id="reason" placeholder="Additional note (optional)..."></textarea>
         </div>
-        <textarea name="reason" id="reason" placeholder="Additional note (optional)..."></textarea>
 
         <div id="balanceError" class="balance-error"></div>
 
@@ -604,6 +606,7 @@ function setActionMode(mode) {
         submitBtn.textContent = 'Submit Stars';
         document.getElementById('starsLabel').textContent = 'Stars Awarded';
         document.getElementById('formHeader').textContent = '\u2b50 Star Reward System';
+        document.getElementById('reasonSection').style.display = 'block';
     } else {
         document.getElementById('btnModeDeduct').className = 'action-btn active-deduct';
         document.getElementById('btnModeAdd').className = 'action-btn';
@@ -611,6 +614,11 @@ function setActionMode(mode) {
         submitBtn.textContent = 'Deduct Stars';
         document.getElementById('starsLabel').textContent = 'Stars to Deduct';
         document.getElementById('formHeader').textContent = '\ud83c\udf81 Reward Redemption';
+        document.getElementById('reasonSection').style.display = 'none';
+        /* Clear any selected reasons when switching to deduct */
+        selectedReasons = [];
+        document.querySelectorAll('.reason-chip.selected').forEach(function(c) { c.classList.remove('selected'); });
+        document.getElementById('reason').value = '';
     }
 }
 
