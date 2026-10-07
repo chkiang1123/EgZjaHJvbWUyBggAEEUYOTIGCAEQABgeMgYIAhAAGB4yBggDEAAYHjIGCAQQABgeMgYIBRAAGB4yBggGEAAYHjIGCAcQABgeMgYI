@@ -192,7 +192,7 @@
         <div id="btnModeDeduct" class="action-btn" onclick="setActionMode('DEDUCT')">➖ Redeem / Deduct</div>
     </div>
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    <form id="rewardForm" action="https://script.google.com/macros/s/AKfycbzINrdewsK-7yw1XL7l4RN9INM9KTNjIyWRxfm5Sq7baJkuYvS-Fi7z28W367JUITy6/exec" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
+    <form id="rewardForm" action="https://script.google.com/macros/s/AKfycbyS9_JI1llzVzx4NiAMyDL8UkzU-J_F5lbcz_M8nGUYSlLkAGq9oLnCQ2UqGgSh_AOU/exec" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
 
         <input type="hidden" name="actionMode" id="actionMode" value="ADD">
 
@@ -377,73 +377,7 @@ var TEACHERS = [
     "Yu Siu Ping (YSP)"
 ];
 
-var TEACHER_PASSCODES = {
-    "Bezant Samantha Diana (BSD)": "770487",
-    "Chan Hin Chiu (CHC)": "849201",
-    "Chan Ka Ying Anna (CKY)": "216739",
-    "Chan Kwok Keung (CKK1)": "762049",
-    "Chan Kwok Kwan (CKK)": "194830",
-    "Chan Lok Hin (CLH)": "520937",
-    "Chan Lok In (CLI)": "126225",
-    "Chan Oi Yan (COY)": "683154",
-    "Chan Shuk Man (CSM)": "941720",
-    "Chan Tsz Man (CTM)": "237586",
-    "Chan Wing Yin (CWY)": "604815",
-    "Chan Yau Sing (CYS)": "852963",
-    "Chan Yuk Wah (CYW)": "736158",
-    "Chan Yung Cheung (CYC)": "428901",
-    "Chang Yee Wai Isabella (CYW2)": "517946",
-    "Cheung Chi Wai (CCW)": "915234",
-    "Cheung Hoi Ning (CHN)": "380617",
-    "Cheung Man Bun (CMB)": "259148",
-    "Cheung Pak Ho (CPH)": "877572",
-    "Chu Ki Cheong (CKC)": "803716",
-    "Chung Ting Kai (CTK)": "388389",
-    "Chung Yuen Wah (CYW1)": "932057",
-    "Dou Xiaoye (DX)": "604279",
-    "Fong Pik Yuk (FPY)": "471829",
-    "Ho Yi Lok (HYL)": "356787",
-    "Hung Chun Man (HCM)": "659304",
-    "Husein Salem Shardow (HSS)": "892437",
-    "Hussain Nibla Shabir (HNS)": "304718",
-    "Kiang Chi Hong (KCH)": "892156",
-    "Kong Lai Han (KLH)": "430872",
-    "Koo Yiu (KY)": "715943",
-    "Kwok Pui Pui (KPP)": "268301",
-    "Lam Ka Yan (LKY)": "594187",
-    "Lam Mei Po (LMP)": "931640",
-    "Lam On Nei (LON)": "172594",
-    "Lam Shuk Ying (LSY)": "806239",
-    "Lam Wai Ling (LWL)": "349015",
-    "Lam Wai Man (LWM)": "685721",
-    "Lau Nga Man (LNM)": "210493",
-    "Lau Wing Kwan (LWK1)": "754820",
-    "Leung Pui Ling (LPL)": "493106",
-    "Li Chi Shing (LCS)": "826539",
-    "Li Silin (LS)": "139704",
-    "Lo Chiu Wing (LCW)": "648215",
-    "Lui Yu Fong (LYF)": "205938",
-    "Mak Shuk Man (MSM)": "369251",
-    "Mak Sin Yee (MSY)": "781409",
-    "Mak Tsui Han (MTH)": "924810",
-    "Ng Oi Yan (NOY)": "510374",
-    "Ng Yau Mei Shirley (NYMS)": "638105",
-    "Sha Wai Pak (SWP)": "837192",
-    "Suen Chun Long (SCL)": "741286",
-    "Tang Wui Wa (TWW)": "306518",
-    "Toa Wai Fook (TWF)": "427690",
-    "Tong Sai Yeung (TSY)": "958204",
-    "Tsao Man Fai (TMF)": "681302",
-    "Tsoi Yiu Lam (TYL)": "140937",
-    "Wong Hui Wing (WHW)": "593862",
-    "Wong Kwok Tai (WKT)": "835410",
-    "Wong Man Han (WMH)": "120684",
-    "Wong Shing Fung (WSF)": "274901",
-    "Wong Suk Yin (WSY)": "506138",
-    "Yao Hing Man (YHM)": "812573",
-    "Yip Kin Man (YKM)": "490825",
-    "Yu Siu Ping (YSP)": "369740"
-};
+/* Passcodes are NOT stored in frontend — server-side validation only (Code.gs) */
 
 var CLASS_STUDENTS = {
     "1A": ["1A01 CHAN SIN YING 陳倩凝", "1A02 CHAN SUM YIN 陳芯賢", "1A03 CHAN SZE LOK 陳詩駱", "1A04 CHAN TSE YU 陳沚如", "1A05 CHAN TSZ WING 陳紫穎", "1A06 CHIU TSZ YUE 趙紫妤", "1A07 IP NGA CHING 葉雅澄", "1A08 LAI CHUNG YAN 賴頌恩", "1A09 LAM HEI TUNG CALEY 林桸橦", "1A10 LAW PO HEI 羅寶曦", "1A11 LI TSZ YUE 李籽予", "1A12 NG SZE TING 吳施婷", "1A13 TANG YEE HEI HANNAH 鄧薾晞", "1A14 WONG CHING KIU 黃靖蕎", "1A15 WONG SUM YU YUNA 黃心瑜", "1A16 YAM CHING 任晴", "1A17 YEUNG TSZ CHING 楊芷晴", "1A18 AU YEUNG NGAI NGAI 歐陽巍巍", "1A19 CHAN PAAK KIU 陳珀喬", "1A20 CHUNG KA TUNG 鍾家棟", "1A21 FUNG YU KI 馮宇麒", "1A22 GURUNG UDHANT 余文達", "1A23 IP YIN KWAN 葉彥均", "1A24 LAW YUNG HO 羅榕灝", "1A25 LEE HO YEUNG 李灝揚", "1A26 NG HO CHUN 吳澔臻", "1A27 SIN YEE HANG 冼以恒", "1A28 TANG NING NGAI 鄧甯毅", "1A29 TANG SZE POK 鄧思博", "1A30 TSO TSZ MING 曹子銘", "1A31 WANG CHEUK YU 王琸宇", "1A32 YIM WAI KIU 嚴韋翹"],
@@ -801,6 +735,11 @@ window.addEventListener('message', function(event) {
         html += '<br>You requested: <strong>' + event.data.requested + ' star(s)</strong>.';
         showBalanceError(html);
         submitBtn.textContent = 'Deduct Stars';
+    } else if (event.data.error && event.data.error.indexOf('Invalid passcode') !== -1) {
+        /* Server rejected the passcode */
+        document.getElementById('passcodeError').textContent = event.data.error;
+        document.getElementById('passcodeError').style.display = 'block';
+        submitBtn.textContent = actionMode === 'ADD' ? 'Submit Stars' : 'Deduct Stars';
     } else {
         showToast('Error: ' + (event.data.error || 'Unknown error'), 'error');
         submitBtn.textContent = actionMode === 'ADD' ? 'Submit Stars' : 'Deduct Stars';
@@ -820,10 +759,12 @@ async function handleFormSubmit(event) {
     }
 
     var code = document.getElementById('passcode').value;
-    if (TEACHER_PASSCODES[teacher] && TEACHER_PASSCODES[teacher] !== code) {
+    if (!code || code.length !== 6) {
         document.getElementById('passcodeError').style.display = 'block';
+        document.getElementById('passcodeError').textContent = 'Please enter a 6-digit passcode.';
         return;
     }
+    /* Passcode correctness is validated server-side only (Code.gs) */
 
     var targetMode = document.getElementById('rewardType').value;
     if (targetMode === 'class' && selectedClasses.length === 0) {
