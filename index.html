@@ -17,6 +17,7 @@
             --overlay-bg: rgba(45,42,38,0.4); --toast-bg: #fff; --toast-text: #2d2a26;
             --chip-bg: #eee8df; --chip-text: #5a5550; --chip-hover: #e0d8cd;
             --search-highlight: #d4950c;
+            --admin-bg: #eef2ff; --admin-border: #818cf8; --admin-text: #4338ca;
         }
         html.dark {
             --bg: #1a1714; --card-bg: #252220; --text: #e8e3dc; --text-muted: #a09a93;
@@ -26,6 +27,7 @@
             --inactive-bg: #302c28; --inactive-text: #8a847e; --inactive-border: #4a4540;
             --overlay-bg: rgba(0,0,0,0.6); --toast-bg: #252220; --toast-text: #e8e3dc;
             --chip-bg: #3a352f; --chip-text: #c0bab3; --chip-hover: #4a4540;
+            --admin-bg: #1e1b3a; --admin-border: #6366f1; --admin-text: #a5b4fc;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -45,8 +47,19 @@
         }
         h2 { text-align: center; color: var(--text); margin-bottom: 8px; font-weight: 800; font-size: 22px; letter-spacing: -0.3px; }
 
-        /* Action mode toggle */
-        .action-mode-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        /* Admin badge */
+        .admin-badge {
+            display: none; text-align: center; margin-bottom: 16px;
+            padding: 8px 14px; border-radius: 8px;
+            background: var(--admin-bg); border: 1.5px solid var(--admin-border);
+            color: var(--admin-text); font-size: 12px; font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .admin-badge.visible { display: block; }
+
+        /* Action mode toggle (admin only) */
+        .action-mode-group { display: none; gap: 10px; margin-bottom: 20px; }
+        .action-mode-group.visible { display: flex; }
         .action-btn {
             flex: 1; padding: 12px 8px; border: 2px solid var(--inactive-border);
             background: var(--inactive-bg); color: var(--inactive-text);
@@ -187,10 +200,15 @@
 <div class="form-container">
     <h2 id="formHeader">⭐ Star Reward System</h2>
 
-    <div class="action-mode-group">
+    <!-- Admin badge (shown only for KCH) -->
+    <div id="adminBadge" class="admin-badge">🔑 ADMIN MODE — You have access to Star Redemption</div>
+
+    <!-- Action mode toggle (admin only — hidden for regular teachers) -->
+    <div id="actionModeGroup" class="action-mode-group">
         <div id="btnModeAdd" class="action-btn active-add" onclick="setActionMode('ADD')">➕ Add Stars</div>
         <div id="btnModeDeduct" class="action-btn" onclick="setActionMode('DEDUCT')">➖ Redeem / Deduct</div>
     </div>
+
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
     <form id="rewardForm" action="https://script.google.com/macros/s/AKfycbynVkIqhtzOUAoYqPszwwzYGmDqsq7mc-9kxkgcpJdP8L9lrfOve461Lo2ykhO8Vbto/exec" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
 
@@ -276,18 +294,19 @@
         <div id="reasonSection">
             <label>Reason / Note <span class="optional">(optional)</span></label>
             <div class="reason-chips" id="reasonChips">
-                <span class="reason-chip" data-reason="Polite & well-mannered" onclick="toggleReasonChip(this)">🤝 Polite & Well-mannered</span>
-                <span class="reason-chip" data-reason="Helpful to teachers/classmates" onclick="toggleReasonChip(this)">💡 Helpful</span>
-                <span class="reason-chip" data-reason="Punctual to school" onclick="toggleReasonChip(this)">⏰ Punctual</span>
-                <span class="reason-chip" data-reason="Honest & trustworthy" onclick="toggleReasonChip(this)">✅ Honest</span>
-                <span class="reason-chip" data-reason="Remarkable results in exam/test" onclick="toggleReasonChip(this)">📝 Great Results</span>
-                <span class="reason-chip" data-reason="Active participation in class" onclick="toggleReasonChip(this)">🙋 Active in Class</span>
-                <span class="reason-chip" data-reason="Good teamwork & cooperation" onclick="toggleReasonChip(this)">🤝 Teamwork</span>
-                <span class="reason-chip" data-reason="Outstanding homework/assignment" onclick="toggleReasonChip(this)">📚 Good Homework</span>
-                <span class="reason-chip" data-reason="Positive attitude & effort" onclick="toggleReasonChip(this)">💪 Great Effort</span>
-                <span class="reason-chip" data-reason="Community service / volunteering" onclick="toggleReasonChip(this)">🌟 Service</span>
+                <span class="reason-chip" data-reason="Good manner & politeness" onclick="toggleReasonChip(this)">🤝 Good Manner & Politeness</span>
+                <span class="reason-chip" data-reason="Helpfulness" onclick="toggleReasonChip(this)">💡 Helpfulness</span>
+                <span class="reason-chip" data-reason="Punctuality" onclick="toggleReasonChip(this)">⏰ Punctuality</span>
+                <span class="reason-chip" data-reason="Honesty" onclick="toggleReasonChip(this)">✅ Honesty</span>
+                <span class="reason-chip" data-reason="Great results" onclick="toggleReasonChip(this)">📝 Great Results</span>
+                <span class="reason-chip" data-reason="Active participation" onclick="toggleReasonChip(this)">🙋 Active Participation</span>
+                <span class="reason-chip" data-reason="Good teamwork" onclick="toggleReasonChip(this)">🤝 Good Teamwork</span>
+                <span class="reason-chip" data-reason="Good homework" onclick="toggleReasonChip(this)">📚 Good Homework</span>
+                <span class="reason-chip" data-reason="Great effort" onclick="toggleReasonChip(this)">💪 Great Effort</span>
+                <span class="reason-chip" data-reason="School / class service" onclick="toggleReasonChip(this)">🌟 School / Class Service</span>
+                <span class="reason-chip" data-reason="" id="otherChip" onclick="toggleOtherChip(this)">✏️ Other (Please specify)</span>
             </div>
-            <textarea name="reason" id="reason" placeholder="Additional note (optional)..."></textarea>
+            <textarea name="reason" id="reason" placeholder="Please specify your reason..." style="display:none;"></textarea>
         </div>
 
         <div id="balanceError" class="balance-error"></div>
@@ -307,6 +326,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
 
 /* ── Constants ── */
 var SPREADSHEET_ID = '1xD_LThLu70H5eG8jI9GX3FvkHS8AT6ud2upnkufYg6A';
+var ADMIN_TEACHER = 'Kiang Chi Hong (KCH)';
 var isSubmitting = false;
 
 var TEACHERS = [
@@ -409,6 +429,7 @@ var CLASS_STUDENTS = {
 var selectedStudents = [];
 var selectedClasses = [];
 var selectedReasons = [];
+var otherChipActive = false;
 var teacherHighlightIndex = -1;
 
 /* ── Toast (replaces alert) ── */
@@ -487,6 +508,27 @@ async function calculateBalances(targets) {
     return balances;
 }
 
+/* ── Admin detection ── */
+function isAdmin(teacherName) {
+    return teacherName === ADMIN_TEACHER;
+}
+
+function updateAdminUI(teacherName) {
+    var isAdm = isAdmin(teacherName);
+    var modeGroup = document.getElementById('actionModeGroup');
+    var badge = document.getElementById('adminBadge');
+
+    if (isAdm) {
+        modeGroup.classList.add('visible');
+        badge.classList.add('visible');
+    } else {
+        modeGroup.classList.remove('visible');
+        badge.classList.remove('visible');
+        /* Reset to ADD mode if switching away from admin */
+        setActionMode('ADD');
+    }
+}
+
 /* ── Searchable Teacher dropdown ── */
 function getInitials(name) {
     var m = name.match(/\(([^)]+)\)/);
@@ -515,7 +557,6 @@ function filterTeachers() {
         if (!query) return true;
         var initials = getInitials(t).toLowerCase();
         var fullLower = t.toLowerCase();
-        /* Match initials, full name, or partial */
         return initials.indexOf(query) === 0 || fullLower.indexOf(query) !== -1;
     });
 
@@ -541,6 +582,7 @@ function selectTeacher(teacher) {
     document.getElementById('teacherName').value = teacher;
     document.getElementById('teacherDropdown').classList.remove('open');
     document.getElementById('passcodeError').style.display = 'none';
+    updateAdminUI(teacher);
 }
 
 /* ── Reason chips ── */
@@ -553,6 +595,18 @@ function toggleReasonChip(el) {
     } else {
         selectedReasons.splice(idx, 1);
         el.classList.remove('selected');
+    }
+}
+
+function toggleOtherChip(el) {
+    otherChipActive = !otherChipActive;
+    el.classList.toggle('selected', otherChipActive);
+    var textarea = document.getElementById('reason');
+    textarea.style.display = otherChipActive ? 'block' : 'none';
+    if (otherChipActive) {
+        textarea.focus();
+    } else {
+        textarea.value = '';
     }
 }
 
@@ -583,12 +637,14 @@ function setActionMode(mode) {
         submitBtn.className = 'deduct-mode';
         submitBtn.textContent = 'Deduct Stars';
         document.getElementById('starsLabel').textContent = 'Stars to Deduct';
-        document.getElementById('formHeader').textContent = '\ud83c\udf81 Reward Redemption';
+        document.getElementById('formHeader').textContent = '\ud83c\udf81 Reward Redemption (Admin)';
         document.getElementById('reasonSection').style.display = 'none';
         /* Clear any selected reasons when switching to deduct */
         selectedReasons = [];
+        otherChipActive = false;
         document.querySelectorAll('.reason-chip.selected').forEach(function(c) { c.classList.remove('selected'); });
         document.getElementById('reason').value = '';
+        document.getElementById('reason').style.display = 'none';
     }
 }
 
@@ -655,7 +711,6 @@ function renderStudentTags() {
     selectedStudents.forEach(function(name) {
         var tag = document.createElement('div');
         tag.className = 'tag';
-        /* Show shorter label: class+num + surname */
         var shortLabel = name.length > 20 ? name.substring(0, 20) + '...' : name;
         var txt = document.createTextNode(shortLabel + ' ');
         var btn = document.createElement('span');
@@ -736,9 +791,11 @@ window.addEventListener('message', function(event) {
         showBalanceError(html);
         submitBtn.textContent = 'Deduct Stars';
     } else if (event.data.error && event.data.error.indexOf('Invalid passcode') !== -1) {
-        /* Server rejected the passcode */
         document.getElementById('passcodeError').textContent = event.data.error;
         document.getElementById('passcodeError').style.display = 'block';
+        submitBtn.textContent = actionMode === 'ADD' ? 'Submit Stars' : 'Deduct Stars';
+    } else if (event.data.error && event.data.error.indexOf('administrator') !== -1) {
+        showToast(event.data.error, 'error');
         submitBtn.textContent = actionMode === 'ADD' ? 'Submit Stars' : 'Deduct Stars';
     } else {
         showToast('Error: ' + (event.data.error || 'Unknown error'), 'error');
@@ -764,7 +821,6 @@ async function handleFormSubmit(event) {
         document.getElementById('passcodeError').textContent = 'Please enter a 6-digit passcode.';
         return;
     }
-    /* Passcode correctness is validated server-side only (Code.gs) */
 
     var targetMode = document.getElementById('rewardType').value;
     if (targetMode === 'class' && selectedClasses.length === 0) {
@@ -857,14 +913,12 @@ async function handleFormSubmit(event) {
 /* ── Init ── */
 window.addEventListener('DOMContentLoaded', function() {
     document.getElementById('passcode').value = '';
-    /* Close teacher dropdown on outside click */
     document.addEventListener('click', function(e) {
         var wrap = document.getElementById('teacherWrap');
         if (!wrap.contains(e.target)) {
             document.getElementById('teacherDropdown').classList.remove('open');
         }
     });
-    /* Keyboard nav for teacher dropdown */
     document.getElementById('teacherSearch').addEventListener('keydown', function(e) {
         var dropdown = document.getElementById('teacherDropdown');
         var items = dropdown.querySelectorAll('.search-dropdown-item');
@@ -884,6 +938,13 @@ window.addEventListener('DOMContentLoaded', function() {
             if (teacherHighlightIndex >= 0 && teacherHighlightIndex < items.length) {
                 items[teacherHighlightIndex].dispatchEvent(new MouseEvent('mousedown'));
             }
+        }
+    });
+    /* Also handle manual clearing of teacher search */
+    document.getElementById('teacherSearch').addEventListener('input', function() {
+        if (!this.value.trim()) {
+            document.getElementById('teacherName').value = '';
+            updateAdminUI('');
         }
     });
 });
